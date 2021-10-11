@@ -17,35 +17,51 @@ class _State extends State<MyApp>{
 
   String _value = " ";
   int _num1 = 0;
-  // bool? _value1 = false;
-  // bool? _value2 = false;
-  int? _value1 = 0;
-  int? _value2 = 0;
+  bool _value1 = false;
+  bool _value2 = false;
+  // int? _value1 = 0;
+  // int? _value2 = 0;
+  //
+  // void _setValue1(int? value) => setState(() =>_value1 = value);
+  // void _setValue2(int? value) => setState(() =>_value2 = value);
 
-  void _setValue1(int? value) => setState(() =>_value1 = value);
-  void _setValue2(int? value) => setState(() =>_value2 = value);
+  // Widget makeRadios(){
+  //   List<Widget> list = [];
+  //   for(int i=0; i<3; i++){
+  //     list.add(new Radio(
+  //         value: i,
+  //         groupValue:_value1,
+  //         onChanged:_setValue1,
+  //         activeColor: Colors.green,
+  //     ));
+  //   }
+  //   Column column = new Column(children:list);
+  //   return column;
+  // }
 
-  Widget makeRadios(){
-    List<Widget> list = [];
-    for(int i=0; i<3; i++){
-      list.add(new Radio(value: i, groupValue:_value1, onChanged:_setValue1));
-    }
-    Column column = new Column(children:list);
-    return column;
-  }
-
-  Widget makeRadioTiles(){
-    List<Widget> list = [];
-    for(int i=0; i<3; i++){
-      list.add(new RadioListTile(value: i, groupValue:_value2, onChanged:_setValue2));
-    }
-
-    Column column = new Column(children:list);
-    return column;
-  }
+  // Widget makeRadioTiles(){
+  //   List<Widget> list = [];
+  //   for(int i=0; i<3; i++){
+  //     list.add(new RadioListTile(
+  //         value: i,
+  //         groupValue:_value2,
+  //         onChanged:_setValue2,
+  //         activeColor: Colors.green,
+  //         controlAffinity: ListTileControlAffinity.trailing,
+  //         title: new Text("Item ${i}"),
+  //         subtitle: new Text("Sub Title"),
+  //     ));
+  //   }
+  //
+  //   Column column = new Column(children:list);
+  //   return column;
+  // }
 
   // void _value1Changed(bool? value) => setState(() => _value1 = value);
   // void _value2Changed(bool? value) => setState(() => _value2 = value);
+
+  void _onChanged1(bool value) => setState(() => _value1 = value);
+  void _onChanged2(bool value) => setState(() => _value2 = value);
 
   void _onChange(String value){
     setState(() =>_value = "Change ${value}");
@@ -97,8 +113,12 @@ class _State extends State<MyApp>{
                 onChanged: _onChange,
                 onSubmitted: _onSubmit,
               ),
-            makeRadios(),
-              makeRadioTiles()
+              new Switch(value:_value1, onChanged:_onChanged1),
+            new SwitchListTile(
+                value:_value2,
+                onChanged:_onChanged2,
+                title: new Text("Hello World", style: new TextStyle(fontWeight:FontWeight.bold,color: Colors.red)),
+            )
             // new Checkbox(value:_value1, onChanged:_value1Changed),
             //   new CheckboxListTile(
             //       value:_value2,
