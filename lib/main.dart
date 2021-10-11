@@ -16,6 +16,12 @@ class MyApp extends StatefulWidget{
 class _State extends State<MyApp>{
 
   String _value = " ";
+  double _slider = 0.0;
+
+
+  void _setValue(double _value) => setState(() => _slider = _value);
+
+
   int _num1 = 0;
   bool _value1 = false;
   bool _value2 = false;
@@ -114,11 +120,13 @@ class _State extends State<MyApp>{
                 onSubmitted: _onSubmit,
               ),
               new Switch(value:_value1, onChanged:_onChanged1),
-            new SwitchListTile(
+              new SwitchListTile(
                 value:_value2,
                 onChanged:_onChanged2,
                 title: new Text("Hello World", style: new TextStyle(fontWeight:FontWeight.bold,color: Colors.red)),
-            )
+            ),
+            new Text("Value: ${(_slider * 100).round()}"),
+            new Slider(value:_slider, onChanged:_setValue)
             // new Checkbox(value:_value1, onChanged:_value1Changed),
             //   new CheckboxListTile(
             //       value:_value2,
