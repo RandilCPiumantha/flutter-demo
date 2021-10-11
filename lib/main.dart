@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 
 void main(){
@@ -95,6 +96,21 @@ class _State extends State<MyApp>{
     });
   }
 
+
+  void _selectDate() async{
+    DateTime? picked = await showDatePicker(
+        context:context,
+        initialDate: new DateTime.now(),
+        firstDate: new DateTime(2021),
+        lastDate: new DateTime(2025)
+    );
+    if(picked != null) setState(() => _value = picked.toString());{
+
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -126,7 +142,9 @@ class _State extends State<MyApp>{
                 title: new Text("Hello World", style: new TextStyle(fontWeight:FontWeight.bold,color: Colors.red)),
             ),
             new Text("Value: ${(_slider * 100).round()}"),
-            new Slider(value:_slider, onChanged:_setValue)
+            new Slider(value:_slider, onChanged:_setValue),
+            new Text(_value),
+            new RaisedButton(onPressed:_selectDate, child: new Text("Date Picker"),)
             // new Checkbox(value:_value1, onChanged:_value1Changed),
             //   new CheckboxListTile(
             //       value:_value2,
