@@ -90,11 +90,7 @@ class _State extends State<MyApp>{
     });
   }
 
-  void _onPressed(){
-    setState(() {
-      _value = new DateTime.now().toString();
-    });
-  }
+  void _onPressed() => setState(() =>_value = new DateTime.now().toString());
 
 
   void _selectDate() async{
@@ -122,6 +118,14 @@ class _State extends State<MyApp>{
           new IconButton(onPressed:_sub, icon: new Icon(Icons.remove)),
         ],
       ),
+
+      floatingActionButton: new FloatingActionButton(
+          onPressed:_onPressed,
+          backgroundColor: Colors.red,
+          mini: true,
+          child: new Icon(Icons.timer),
+      ),
+
       body: new Container(
         padding: new EdgeInsets.all(32.0),
         child: new Center(
