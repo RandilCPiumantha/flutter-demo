@@ -115,14 +115,19 @@ class _State extends State<MyApp>{
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Name here"),
+        title: new Text("Hello Wold"),
+        backgroundColor: Colors.red,
+        actions:<Widget>[
+          new IconButton(onPressed:_add, icon: new Icon(Icons.add)),
+          new IconButton(onPressed:_sub, icon: new Icon(Icons.remove)),
+        ],
       ),
       body: new Container(
         padding: new EdgeInsets.all(32.0),
         child: new Center(
           child: new Column(
             children:<Widget> [
-              new Text(_value),
+              new Text(_num1.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 37.0)),
               new TextField(
                 decoration: new InputDecoration(
                   labelText: 'Hello',
@@ -144,7 +149,8 @@ class _State extends State<MyApp>{
             new Text("Value: ${(_slider * 100).round()}"),
             new Slider(value:_slider, onChanged:_setValue),
             new Text(_value),
-            new RaisedButton(onPressed:_selectDate, child: new Text("Date Picker"),)
+            new RaisedButton(onPressed:_selectDate, child: new Text("Date Picker"),
+            )
             // new Checkbox(value:_value1, onChanged:_value1Changed),
             //   new CheckboxListTile(
             //       value:_value2,
