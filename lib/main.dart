@@ -14,7 +14,49 @@ class MyApp extends StatefulWidget{
   _State createState() => new _State();
 }
 
+enum Answers{YES,NO,MAYBE}
+
 class _State extends State<MyApp>{
+
+  void _setValue1(String value) => setState(() => _value = value);
+
+
+  Future  _askUser() async {
+    switch (await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return new SimpleDialog(
+            title: const Text('Do You Like Flutter'),
+            children: <Widget>[
+              new SimpleDialogOption(
+                onPressed: () { Navigator.pop(context, Answers.YES);},
+                child: new Text('Yes!!!'),
+              ),
+              new SimpleDialogOption(
+                onPressed: () { Navigator.pop(context, Answers.NO); },
+                child: new Text('No!!!'),
+              ),
+              new SimpleDialogOption(
+                onPressed: () { Navigator.pop(context, Answers.MAYBE); },
+                child: new Text('Maybe!!'),
+              ),
+            ],
+          );
+        }
+    )) {
+      case Answers.YES:
+      _setValue1("yes");
+        break;
+      case Answers.NO:
+      _setValue1("No");
+        break;
+      case Answers.MAYBE:
+        _setValue1("Maybe");
+        break;
+    }
+  }
+
+
 
   Future<void> _showAlert(BuildContext context, String message) async {
     return showDialog<void>(
@@ -239,7 +281,7 @@ class _State extends State<MyApp>{
               new ElevatedButton(onPressed:_showButton, child:new Text("Click Me for BottomSheet")),
               new RaisedButton(onPressed:_showbar, child: new Text("Click Me for SnackBar")),
               new RaisedButton(onPressed:() => _showAlert(context,"Do You Like Flutter"), child: new Text("Click Me for Alert ")),
-
+              new ElevatedButton(onPressed:_askUser, child: new Text("Click Me Dialog")),
 
 
               // new Checkbox(value:_value1, onChanged:_value1Changed),
