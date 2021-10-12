@@ -20,6 +20,10 @@ class _State extends State<MyApp>{
 
   void _setValue1(String value) => setState(() => _value = value);
 
+    TextEditingController _user = new TextEditingController();
+    TextEditingController _pass = new TextEditingController();
+
+
 
   Future  _askUser() async {
     switch (await showDialog(
@@ -63,7 +67,7 @@ class _State extends State<MyApp>{
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return new AlertDialog(
+        return AlertDialog(
           title: new Text(message),
           actions: <Widget>[
             new TextButton(onPressed:() => Navigator.pop(context),child: new Text("Click Me"))
@@ -255,34 +259,55 @@ class _State extends State<MyApp>{
         child: new Center(
           child: new Column(
             children:<Widget> [
-              new Text(_num1.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 37.0)),
-              new TextField(
-                decoration: new InputDecoration(
-                  labelText: 'Hello',
-                  hintText: 'Hint',
-                  icon: new Icon(Icons.people)
-                ),
-                autocorrect: true,
-                autofocus: true,
-                keyboardType: TextInputType.text,
-                onChanged: _onChange,
-                onSubmitted: _onSubmit,
+              new Text("Please Login"),
+              new Row(
+                children:<Widget>[
+                  new Text("Username"),
+                  new Expanded(child: new TextField(controller:_user)
+                  )
+                ],
               ),
-              new Switch(value:_value1, onChanged:_onChanged1),
-              new SwitchListTile(
-                value:_value2,
-                onChanged:_onChanged2,
-                title: new Text("Hello World", style: new TextStyle(fontWeight:FontWeight.bold,color: Colors.red)),
-            ),
-            new Text("Value: ${(_slider * 100).round()}"),
-            new Slider(value:_slider, onChanged:_setValue),
-            new Text(_value),
-            new RaisedButton(onPressed:_selectDate, child: new Text("Date Picker")),
-              new ElevatedButton(onPressed:_showButton, child:new Text("Click Me for BottomSheet")),
-              new RaisedButton(onPressed:_showbar, child: new Text("Click Me for SnackBar")),
-              new RaisedButton(onPressed:() => _showAlert(context,"Do You Like Flutter"), child: new Text("Click Me for Alert ")),
-              new ElevatedButton(onPressed:_askUser, child: new Text("Click Me Dialog")),
 
+              new Row(
+                children:<Widget>[
+                  new Text("Password"),
+                  new Expanded(child: new TextField(controller:_pass, obscureText:true)
+                  )
+                ],
+              ),
+            new Padding(
+                padding: new EdgeInsets.all(12.0),
+                child: new ElevatedButton(onPressed:() => print("Login ${_user.text}"), child:new Text("Click me")),
+            ),
+
+            //   new Text(_num1.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 37.0)),
+            //   new TextField(
+            //     decoration: new InputDecoration(
+            //       labelText: 'Hello',
+            //       hintText: 'Hint',
+            //       icon: new Icon(Icons.people)
+            //     ),
+            //     autocorrect: true,
+            //     autofocus: true,
+            //     keyboardType: TextInputType.text,
+            //     onChanged: _onChange,
+            //     onSubmitted: _onSubmit,
+            //   ),
+            //   new Switch(value:_value1, onChanged:_onChanged1),
+            //   new SwitchListTile(
+            //     value:_value2,
+            //     onChanged:_onChanged2,
+            //     title: new Text("Hello World", style: new TextStyle(fontWeight:FontWeight.bold,color: Colors.red)),
+            // ),
+            // new Text("Value: ${(_slider * 100).round()}"),
+            // new Slider(value:_slider, onChanged:_setValue),
+            // new Text(_value),
+            // new RaisedButton(onPressed:_selectDate, child: new Text("Date Picker")),
+            //   new ElevatedButton(onPressed:_showButton, child:new Text("Click Me for BottomSheet")),
+            //   new RaisedButton(onPressed:_showbar, child: new Text("Click Me for SnackBar")),
+            //   new RaisedButton(onPressed:() => _showAlert(context,"Do You Like Flutter"), child: new Text("Click Me for Alert ")),
+            //   new ElevatedButton(onPressed:_askUser, child: new Text("Click Me Dialog")),
+            //
 
               // new Checkbox(value:_value1, onChanged:_value1Changed),
             //   new CheckboxListTile(
@@ -294,6 +319,7 @@ class _State extends State<MyApp>{
             //       secondary: new Icon(Icons.archive),
             //       activeColor: Colors.red,
             //   )
+
             ],
           ),
         ),
