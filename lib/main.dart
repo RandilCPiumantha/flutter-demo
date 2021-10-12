@@ -16,8 +16,19 @@ class MyApp extends StatefulWidget{
 
 class _State extends State<MyApp>{
 
+
+  List<BottomNavigationBarItem> _items = [];
   String _value = " ";
+  int _index = 0;
   double _slider = 0.0;
+
+
+  @override
+  void initState() {
+  _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), title: new Text("People")));
+  _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), title: new Text("Weekend")));
+  _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), title: new Text("Message")));
+  }
 
 
   void _setValue(double _value) => setState(() => _slider = _value);
@@ -131,7 +142,7 @@ class _State extends State<MyApp>{
           child: new Column(
             children:<Widget>[
               new Text("Hello Drawer"),
-              new RaisedButton(onPressed:() => Navigator.pop(context), child: new Text("Close"))
+              new ElevatedButton(onPressed:() => Navigator.pop(context), child: new Text("Close"))
             ],
           ),
         ),
@@ -142,6 +153,18 @@ class _State extends State<MyApp>{
         new IconButton(onPressed:() => _onClick("Button 2"), icon: new Icon(Icons.people)),
         new IconButton(onPressed:() => _onClick("Button 3"), icon: new Icon(Icons.map)),
       ],
+
+      bottomNavigationBar: new BottomNavigationBar(
+          items:_items,
+        fixedColor: Colors.blue,
+        currentIndex:_index,
+        onTap: (int item){
+            setState(() {
+              _index = item;
+              _value = "Current value is ${_index.toString()}";
+            });
+        },
+      ),
 
 
       body: new Container(
@@ -171,8 +194,8 @@ class _State extends State<MyApp>{
             new Text("Value: ${(_slider * 100).round()}"),
             new Slider(value:_slider, onChanged:_setValue),
             new Text(_value),
-            new RaisedButton(onPressed:_selectDate, child: new Text("Date Picker"),
-            )
+            new ElevatedButton(onPressed:_selectDate, child: new Text("Date Picker"),
+            ),
             // new Checkbox(value:_value1, onChanged:_value1Changed),
             //   new CheckboxListTile(
             //       value:_value2,
