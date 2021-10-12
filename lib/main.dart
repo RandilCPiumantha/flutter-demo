@@ -92,6 +92,8 @@ class _State extends State<MyApp>{
 
   void _onPressed() => setState(() =>_value = new DateTime.now().toString());
 
+  void _onClick(String value) => setState(() => _value = value);
+
 
   void _selectDate() async{
     DateTime? picked = await showDatePicker(
@@ -134,6 +136,13 @@ class _State extends State<MyApp>{
           ),
         ),
       ) ,
+
+      persistentFooterButtons:<Widget> [
+        new IconButton(onPressed:() => _onClick("Button 1"), icon: new Icon(Icons.timer)),
+        new IconButton(onPressed:() => _onClick("Button 2"), icon: new Icon(Icons.people)),
+        new IconButton(onPressed:() => _onClick("Button 3"), icon: new Icon(Icons.map)),
+      ],
+
 
       body: new Container(
         padding: new EdgeInsets.all(32.0),
