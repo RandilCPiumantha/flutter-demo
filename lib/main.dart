@@ -16,6 +16,21 @@ class MyApp extends StatefulWidget{
 
 class _State extends State<MyApp>{
 
+  Future<void> _showAlert(BuildContext context, String message) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text(message),
+          actions: <Widget>[
+            new TextButton(onPressed:() => Navigator.pop(context),child: new Text("Click Me"))
+          ]
+        );
+      },
+    );
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldstate = new GlobalKey<ScaffoldState>();
 
   void _showbar(){
@@ -47,7 +62,7 @@ class _State extends State<MyApp>{
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new Text("Some info here", style: new TextStyle(color: Colors.red,fontWeight: FontWeight.bold)),
-                  new ElevatedButton(onPressed:() => Navigator.pop(context), child:new Text("Close"))
+                  new ElevatedButton(onPressed:() => Navigator.pop(context, "Do You Like Flutter?"), child:new Text("Close"))
                 ],
               ),
             );
@@ -221,8 +236,10 @@ class _State extends State<MyApp>{
             new Slider(value:_slider, onChanged:_setValue),
             new Text(_value),
             new RaisedButton(onPressed:_selectDate, child: new Text("Date Picker")),
-              new ElevatedButton(onPressed:_showButton, child:new Text("Click Me")),
-              new RaisedButton(onPressed:_showbar, child: new Text("Click Me")),
+              new ElevatedButton(onPressed:_showButton, child:new Text("Click Me for BottomSheet")),
+              new RaisedButton(onPressed:_showbar, child: new Text("Click Me for SnackBar")),
+              new RaisedButton(onPressed:() => _showAlert(context,"Do You Like Flutter"), child: new Text("Click Me for Alert ")),
+
 
 
               // new Checkbox(value:_value1, onChanged:_value1Changed),
