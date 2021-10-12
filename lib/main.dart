@@ -16,6 +16,13 @@ class MyApp extends StatefulWidget{
 
 class _State extends State<MyApp>{
 
+  final GlobalKey<ScaffoldState> _scaffoldstate = new GlobalKey<ScaffoldState>();
+
+  void _showbar(){
+    _scaffoldstate.currentState?.showSnackBar(new SnackBar(content: new Text("Hello Wold")));
+  }
+
+
 
   List<BottomNavigationBarItem> _items = [];
   String _value = " ";
@@ -25,9 +32,27 @@ class _State extends State<MyApp>{
 
   @override
   void initState() {
-  _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), title: new Text("People")));
-  _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), title: new Text("Weekend")));
-  _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), title: new Text("Message")));
+  _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), label:"People"));
+  _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), label:"Weekend"));
+  _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), label:"Message"));
+  }
+
+  void _showButton(){
+    showModalBottomSheet <void>(
+        context: context,
+        builder: (BuildContext context){
+            return new Container(
+              padding: new EdgeInsets.all(15.0),
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Text("Some info here", style: new TextStyle(color: Colors.red,fontWeight: FontWeight.bold)),
+                  new ElevatedButton(onPressed:() => Navigator.pop(context), child:new Text("Close"))
+                ],
+              ),
+            );
+        }
+    );
   }
 
 
@@ -120,6 +145,7 @@ class _State extends State<MyApp>{
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      key:_scaffoldstate,
       appBar: new AppBar(
         title: new Text("Hello Wold"),
         backgroundColor: Colors.red,
@@ -156,9 +182,9 @@ class _State extends State<MyApp>{
 
       bottomNavigationBar: new BottomNavigationBar(
           items:_items,
-        fixedColor: Colors.blue,
-        currentIndex:_index,
-        onTap: (int item){
+          fixedColor: Colors.blue,
+          currentIndex:_index,
+          onTap: (int item){
             setState(() {
               _index = item;
               _value = "Current value is ${_index.toString()}";
@@ -194,9 +220,12 @@ class _State extends State<MyApp>{
             new Text("Value: ${(_slider * 100).round()}"),
             new Slider(value:_slider, onChanged:_setValue),
             new Text(_value),
-            new ElevatedButton(onPressed:_selectDate, child: new Text("Date Picker"),
-            ),
-            // new Checkbox(value:_value1, onChanged:_value1Changed),
+            new RaisedButton(onPressed:_selectDate, child: new Text("Date Picker")),
+              new ElevatedButton(onPressed:_showButton, child:new Text("Click Me")),
+              new RaisedButton(onPressed:_showbar, child: new Text("Click Me")),
+
+
+              // new Checkbox(value:_value1, onChanged:_value1Changed),
             //   new CheckboxListTile(
             //       value:_value2,
             //       onChanged:_value2Changed,
