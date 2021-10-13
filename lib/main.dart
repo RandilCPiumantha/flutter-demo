@@ -260,6 +260,7 @@ class _State extends State<MyApp>{
           child: new Column(
             children:<Widget> [
               new Text("Please Login"),
+              new Expanded(child:new Image.asset('images/Flutter.png')),
               new Row(
                 children:<Widget>[
                   new Text("Username"),
@@ -278,6 +279,44 @@ class _State extends State<MyApp>{
             new Padding(
                 padding: new EdgeInsets.all(12.0),
                 child: new ElevatedButton(onPressed:() => print("Login ${_user.text}"), child:new Text("Click me")),
+            ),
+
+            new Row(
+              children: <Widget>[
+                new Card(
+                  child: new Container(
+                    padding: new EdgeInsets.all(32.0),
+                    child: new Column(
+                      children: [
+                        new Text("Hello Wold"),
+                        new Text("How are You ?")
+                      ],
+                    ),
+                  ),
+                ),
+                new Card(
+                  child: new Container(
+                    padding: new EdgeInsets.all(32.0),
+                    child: new Column(
+                      children: [
+                        new Text("Hello Wold"),
+                        new Text("How are You ?")
+                      ],
+                    ),
+                  ),
+                ),
+                new Card(
+                  child: new Container(
+                    padding: new EdgeInsets.all(32.0),
+                    child: new Column(
+                      children: [
+                        new Text("Hello Wold"),
+                        new Text("How are You ?")
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
 
             //   new Text(_num1.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 37.0)),
