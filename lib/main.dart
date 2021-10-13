@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:io';
 
 void main(){
 runApp(new MaterialApp(
@@ -17,6 +19,21 @@ class MyApp extends StatefulWidget{
 enum Answers{YES,NO,MAYBE}
 
 class _State extends State<MyApp>{
+
+  Map _countries = Map();
+
+  Future _getData() async{
+    var url = "http://country.io/names.json";
+    var response = await http.get(Uri.parse(url));
+    print(response);
+
+    if(response.statusCode == 200){
+      setState(() => _countries = jsonDecode(response.body));
+      print("Loaded ${_countries.length} countries");
+    }else {
+      throw Exception('Failed to load');
+    }
+  }
 
   void _setValue1(String value) => setState(() => _value = value);
 
@@ -93,6 +110,9 @@ class _State extends State<MyApp>{
 
   @override
   void initState() {
+
+    _getData();
+
   _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), label:"People"));
   _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), label:"Weekend"));
   _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.people), label:"Message"));
@@ -205,6 +225,8 @@ class _State extends State<MyApp>{
 
   @override
   Widget build(BuildContext context) {
+
+
     return new Scaffold(
       key:_scaffoldstate,
       appBar: new AppBar(
@@ -259,65 +281,79 @@ class _State extends State<MyApp>{
         child: new Center(
           child: new Column(
             children:<Widget> [
-              new Text("Please Login"),
-              new Expanded(child:new Image.asset('images/Flutter.png')),
-              new Row(
-                children:<Widget>[
-                  new Text("Username"),
-                  new Expanded(child: new TextField(controller:_user)
-                  )
-                ],
-              ),
+              new Text("Countries", style: new TextStyle(fontWeight: FontWeight.bold)),
+              new Expanded(child: new ListView.builder(
+                  itemCount:_countries.length,
+                  itemBuilder: (BuildContext context, int index){
+                      String key = _countries.keys.elementAt(index);
+                      return new Row(
+                        children: <Widget>[
+                          new Text("${key} :"),
+                          new Text(_countries[key ]),
+                        ],
+                      );
+                  },
+              )),
 
-              new Row(
-                children:<Widget>[
-                  new Text("Password"),
-                  new Expanded(child: new TextField(controller:_pass, obscureText:true)
-                  )
-                ],
-              ),
-            new Padding(
-                padding: new EdgeInsets.all(12.0),
-                child: new ElevatedButton(onPressed:() => print("Login ${_user.text}"), child:new Text("Click me")),
-            ),
 
-            new Row(
-              children: <Widget>[
-                new Card(
-                  child: new Container(
-                    padding: new EdgeInsets.all(32.0),
-                    child: new Column(
-                      children: [
-                        new Text("Hello Wold"),
-                        new Text("How are You ?")
-                      ],
-                    ),
-                  ),
-                ),
-                new Card(
-                  child: new Container(
-                    padding: new EdgeInsets.all(32.0),
-                    child: new Column(
-                      children: [
-                        new Text("Hello Wold"),
-                        new Text("How are You ?")
-                      ],
-                    ),
-                  ),
-                ),
-                new Card(
-                  child: new Container(
-                    padding: new EdgeInsets.all(32.0),
-                    child: new Column(
-                      children: [
-                        new Text("Hello Wold"),
-                        new Text("How are You ?")
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
+            //   new Expanded(child:new Image.asset('images/Flutter.png')),
+            //   new Row(
+            //     children:<Widget>[
+            //       new Text("Username"),
+            //       new Expanded(child: new TextField(controller:_user)
+            //       )
+            //     ],
+            //   ),
+            //
+            //   new Row(
+            //     children:<Widget>[
+            //       new Text("Password"),
+            //       new Expanded(child: new TextField(controller:_pass, obscureText:true)
+            //       )
+            //     ],
+            //   ),
+            // new Padding(
+            //     padding: new EdgeInsets.all(12.0),
+            //     child: new ElevatedButton(onPressed:() => print("Login ${_user.text}"), child:new Text("Click me")),
+            // ),
+            //
+            // new Row(
+            //   children: <Widget>[
+            //     new Card(
+            //       child: new Container(
+            //         padding: new EdgeInsets.all(32.0),
+            //         child: new Column(
+            //           children: [
+            //             new Text("Hello Wold"),
+            //             new Text("How are You ?")
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //     new Card(
+            //       child: new Container(
+            //         padding: new EdgeInsets.all(32.0),
+            //         child: new Column(
+            //           children: [
+            //             new Text("Hello Wold"),
+            //             new Text("How are You ?")
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //     new Card(
+            //       child: new Container(
+            //         padding: new EdgeInsets.all(32.0),
+            //         child: new Column(
+            //           children: [
+            //             new Text("Hello Wold"),
+            //             new Text("How are You ?")
+            //           ],
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
 
             //   new Text(_num1.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 37.0)),
             //   new TextField(
